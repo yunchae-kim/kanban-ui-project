@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import TaskForm from './TaskForm';
-import TaskColumn from './TaskColumn';
+import TaskForm from '../TaskForm/TaskForm';
+import TaskColumn from '../TaskColumn/TaskColumn';
 
 interface Task {
   id: string;
