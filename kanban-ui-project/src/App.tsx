@@ -1,15 +1,12 @@
 import React from 'react';
 import './App.css';
-import TaskForm from './components/TaskForm';
+import KanbanBoard from './components/KanbanBord/KanbanBoard';
+import TaskForm from './components/TaskForm/TaskForm';
 
 function App() {
-  const handleTaskSubmit = (title: string, tags: string[]) => {
-    console.log('Task submitted:', title, tags);
-  };
-
   return (
     <div className="App">
-      <TaskForm onSubmit={handleTaskSubmit} />
+      <KanbanBoard></KanbanBoard>
     </div>
   );
 }
