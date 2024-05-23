@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import TaskForm from '../TaskForm/TaskForm';
 import TaskColumn from '../TaskColumn/TaskColumn';
-
-interface Task {
-  id: string;
-  title: string;
-  tags: string[];
-  status: 'todo' | 'in-progress' | 'done';
-}
+import { Task } from '../../types/Task';
 
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);

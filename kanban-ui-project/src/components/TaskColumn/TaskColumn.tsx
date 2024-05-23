@@ -1,11 +1,5 @@
 import React from 'react';
-
-interface Task {
-  id: string;
-  title: string;
-  tags: string[];
-  status: 'todo' | 'in-progress' | 'done';
-}
+import { Task } from '../../types/Task';
 
 interface TaskColumnProps {
   title: string;
@@ -14,6 +8,8 @@ interface TaskColumnProps {
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   onDrop: (e: React.DragEvent<HTMLDivElement>, status: Task['status']) => void;
   status: Task['status'];
+  onEditTask;
+  onDeleteTask;
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Task } from '../../types/Task';
 
 interface EditTaskFormProps {
   task: Task;
