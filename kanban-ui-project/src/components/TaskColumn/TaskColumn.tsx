@@ -11,15 +11,17 @@ interface TaskColumnProps {
   title: string;
   tasks: Task[];
   onDragStart: (e: React.DragEvent<HTMLDivElement>, taskId: string) => void;
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({
   title,
   tasks,
   onDragStart,
+  onDragOver,
 }) => {
   return (
-    <div className="bg-gray-100 p-4 rounded">
+    <div className="bg-gray-100 p-4 rounded" onDragOver={onDragOver}>
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       {tasks.map((task) => (
         <div
