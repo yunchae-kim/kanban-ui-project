@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import TaskForm from '../TaskForm/TaskForm';
 import TaskColumn from '../TaskColumn/TaskColumn';
 import { Task } from '../../types/Task';
+import EditTaskForm from '../EditTaskForm/EditTaskForm';
 
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
 
   const handleCreateTask = (title: string, tags: string[]) => {
     const newTask: Task = {
@@ -38,10 +40,39 @@ const KanbanBoard: React.FC = () => {
     setTasks(updatedTasks);
   };
 
+  const handleEditTask = (taskId: string) => {
+    setEditingTaskId(taskId);
+  };
+
+  const handleUpdateTask = (taskId: string, title: string, tags: string[]) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, title, tags } : task,
+    );
+    setTasks(updatedTasks);
+    setEditingTaskId(null);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTaskId(null);
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
-      <TaskForm onSubmit={handleCreateTask} />
+      {editingTaskId ? (
+        <EditTaskForm
+          task={tasks.find((task) => task.id === editingTaskId)!}
+          onSubmit={handleUpdateTask}
+          onCancel={handleCancelEdit}
+        />
+      ) : (
+        <TaskForm onSubmit={handleCreateTask} />
+      )}
       <div className="mt-8 grid grid-cols-3 gap-4">
         <TaskColumn
           title="To Do"
@@ -50,6 +81,8 @@ const KanbanBoard: React.FC = () => {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           status="todo"
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
         />
         <TaskColumn
           title="In Progress"
@@ -58,6 +91,8 @@ const KanbanBoard: React.FC = () => {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           status="in-progress"
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
         />
         <TaskColumn
           title="Done"
@@ -66,6 +101,8 @@ const KanbanBoard: React.FC = () => {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           status="done"
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
         />
       </div>
     </div>
