@@ -25,7 +25,20 @@ const KanbanBoard: React.FC = () => {
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
       <TaskForm onSubmit={handleCreateTask} />
-      {/* To-do: Columns for task status */}
+      <div className="mt-8 grid grid-cols-3 gap-4">
+        <div className="bg-gray-100 p-4 rounded">
+          <h2 className="text-xl font-bold mb-4">To Do</h2>
+          {/* Tasks with 'todo' status will be rendered here */}
+        </div>
+        <div className="bg-gray-100 p-4 rounded">
+          <h2 className="text-xl font-bold mb-4">In Progress</h2>
+          {/* Tasks with 'in-progress' status will be rendered here */}
+        </div>
+        <div className="bg-gray-100 p-4 rounded">
+          <h2 className="text-xl font-bold mb-4">Done</h2>
+          {/* Tasks with 'done' status will be rendered here */}
+        </div>
+      </div>
     </div>
   );
 };
