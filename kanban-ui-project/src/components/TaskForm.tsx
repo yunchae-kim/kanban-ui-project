@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 
 interface TaskFormProps {
-  // onSubmit: (title: string, tags: string[]) => void;
+  onSubmit: (title: string, tags: string[]) => void;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({  }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(title, tags);
+    setTitle('');
+    setTags([]);
+    setTagInput('');
+  };
 
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
@@ -21,7 +29,7 @@ const TaskForm: React.FC<TaskFormProps> = ({  }) => {
   };
 
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
           Title
