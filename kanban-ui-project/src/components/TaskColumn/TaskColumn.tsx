@@ -1,11 +1,5 @@
 import React from 'react';
-
-interface Task {
-  id: string;
-  title: string;
-  tags: string[];
-  status: 'todo' | 'in-progress' | 'done';
-}
+import { Task } from '../../types/Task';
 
 interface TaskColumnProps {
   title: string;
@@ -14,6 +8,8 @@ interface TaskColumnProps {
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   onDrop: (e: React.DragEvent<HTMLDivElement>, status: Task['status']) => void;
   status: Task['status'];
+  onEditTask: (taskId: string) => void;
+  onDeleteTask: (taskId: string) => void;
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({
@@ -23,6 +19,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
   onDragOver,
   onDrop,
   status,
+  onEditTask,
+  onDeleteTask,
 }) => {
   return (
     <div
@@ -48,6 +46,20 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                 {tag}
               </span>
             ))}
+          </div>
+          <div className="mt-4 flex justify-end">
+            <button
+              className="text-blue-500 hover:text-blue-700 mr-4"
+              onClick={() => onEditTask(task.id)}
+            >
+              Edit
+            </button>
+            <button
+              className="text-red-500 hover:text-red-700"
+              onClick={() => onDeleteTask(task.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
