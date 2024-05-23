@@ -28,15 +28,63 @@ const KanbanBoard: React.FC = () => {
       <div className="mt-8 grid grid-cols-3 gap-4">
         <div className="bg-gray-100 p-4 rounded">
           <h2 className="text-xl font-bold mb-4">To Do</h2>
-          {/* Tasks with 'todo' status will be rendered here */}
+          {tasks
+            .filter((task) => task.status === 'todo')
+            .map((task) => (
+              <div key={task.id} className="bg-white p-4 rounded shadow mb-4">
+                <h3 className="font-bold">{task.title}</h3>
+                <div className="mt-2">
+                  {task.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
         <div className="bg-gray-100 p-4 rounded">
           <h2 className="text-xl font-bold mb-4">In Progress</h2>
-          {/* Tasks with 'in-progress' status will be rendered here */}
+          {tasks
+            .filter((task) => task.status === 'in-progress')
+            .map((task) => (
+              <div key={task.id} className="bg-white p-4 rounded shadow mb-4">
+                <h3 className="font-bold">{task.title}</h3>
+                <div className="mt-2">
+                  {task.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
         <div className="bg-gray-100 p-4 rounded">
           <h2 className="text-xl font-bold mb-4">Done</h2>
-          {/* Tasks with 'done' status will be rendered here */}
+          {tasks
+            .filter((task) => task.status === 'done')
+            .map((task) => (
+              <div key={task.id} className="bg-white p-4 rounded shadow mb-4">
+                <h3 className="font-bold">{task.title}</h3>
+                <div className="mt-2">
+                  {task.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
