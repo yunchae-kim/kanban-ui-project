@@ -10,14 +10,24 @@ interface Task {
 interface TaskColumnProps {
   title: string;
   tasks: Task[];
+  onDragStart: (e: React.DragEvent<HTMLDivElement>, taskId: string) => void;
 }
 
-const TaskColumn: React.FC<TaskColumnProps> = ({ title, tasks }) => {
+const TaskColumn: React.FC<TaskColumnProps> = ({
+  title,
+  tasks,
+  onDragStart,
+}) => {
   return (
     <div className="bg-gray-100 p-4 rounded">
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       {tasks.map((task) => (
-        <div key={task.id} className="bg-white p-4 rounded shadow mb-4">
+        <div
+          key={task.id}
+          className="bg-white p-4 rounded shadow mb-4"
+          draggable
+          onDragStart={(e) => onDragStart(e, task.id)}
+        >
           <h3 className="font-bold">{task.title}</h3>
           <div className="mt-2">
             {task.tags.map((tag) => (

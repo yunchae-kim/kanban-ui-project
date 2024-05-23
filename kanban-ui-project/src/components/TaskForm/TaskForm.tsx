@@ -29,9 +29,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="title"
+        >
           Title
         </label>
         <input
@@ -45,7 +51,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tags">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="tags"
+        >
           Tags
         </label>
         <div className="flex">
