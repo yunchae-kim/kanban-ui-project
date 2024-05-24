@@ -43,7 +43,11 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             {task.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2"
+                className={`inline-block rounded-full px-2 py-1 text-xs font-semibold mr-2 ${
+                  selectedTags.includes(tag)
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-700'
+                }`}
               >
                 {tag}
               </span>
@@ -62,20 +66,6 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             >
               Delete
             </button>
-          </div>
-          <div className="mt-2">
-            {task.tags.map((tag) => (
-              <span
-                key={tag}
-                className={`inline-block rounded-full px-2 py-1 text-xs font-semibold mr-2 ${
-                  selectedTags.includes(tag)
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-700'
-                }`}
-              >
-                {tag}
-              </span>
-            ))}
           </div>
         </div>
       ))}
