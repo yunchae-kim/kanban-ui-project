@@ -7,6 +7,7 @@ import EditTaskForm from '../EditTaskForm/EditTaskForm';
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleCreateTask = (title: string, tags: string[]) => {
     const newTask: Task = {
@@ -61,6 +62,21 @@ const KanbanBoard: React.FC = () => {
     setTasks(updatedTasks);
   };
 
+  const handleTagSelect = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
+  const filteredTasks =
+    selectedTags.length > 0
+      ? tasks.filter((task) =>
+          task.tags.some((tag) => selectedTags.includes(tag)),
+        )
+      : tasks;
+
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
@@ -73,10 +89,30 @@ const KanbanBoard: React.FC = () => {
       ) : (
         <TaskForm onSubmit={handleCreateTask} />
       )}
+      <div className="mt-4">
+        <h2 className="text-sl font-bold mb-2">Filter by Tags:</h2>
+        <div>
+          {Array.from(new Set(tasks.flatMap((task) => task.tags))).map(
+            (tag) => (
+              <button
+                key={tag}
+                className={`px-2 py-1 rounded-full text-sm font-semibold mr-2 mb-2 ${
+                  selectedTags.includes(tag)
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-700'
+                }`}
+                onClick={() => handleTagSelect(tag)}
+              >
+                {tag}
+              </button>
+            ),
+          )}
+        </div>
+      </div>
       <div className="mt-8 grid grid-cols-3 gap-4">
         <TaskColumn
           title="To Do"
-          tasks={tasks.filter((task) => task.status === 'todo')}
+          tasks={filteredTasks.filter((task) => task.status === 'todo')}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
@@ -86,7 +122,7 @@ const KanbanBoard: React.FC = () => {
         />
         <TaskColumn
           title="In Progress"
-          tasks={tasks.filter((task) => task.status === 'in-progress')}
+          tasks={filteredTasks.filter((task) => task.status === 'in-progress')}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
@@ -96,7 +132,7 @@ const KanbanBoard: React.FC = () => {
         />
         <TaskColumn
           title="Done"
-          tasks={tasks.filter((task) => task.status === 'done')}
+          tasks={filteredTasks.filter((task) => task.status === 'done')}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
