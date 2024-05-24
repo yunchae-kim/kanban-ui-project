@@ -119,6 +119,7 @@ const KanbanBoard: React.FC = () => {
           status="todo"
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
+          selectedTags={selectedTags}
         />
         <TaskColumn
           title="In Progress"
@@ -129,6 +130,7 @@ const KanbanBoard: React.FC = () => {
           status="in-progress"
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
+          selectedTags={selectedTags}
         />
         <TaskColumn
           title="Done"
@@ -139,6 +141,7 @@ const KanbanBoard: React.FC = () => {
           status="done"
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
+          selectedTags={selectedTags}
         />
       </div>
     </div>

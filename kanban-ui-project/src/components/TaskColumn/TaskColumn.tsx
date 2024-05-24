@@ -10,6 +10,7 @@ interface TaskColumnProps {
   status: Task['status'];
   onEditTask: (taskId: string) => void;
   onDeleteTask: (taskId: string) => void;
+  selectedTags: string[];
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({
@@ -21,6 +22,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
   status,
   onEditTask,
   onDeleteTask,
+  selectedTags,
 }) => {
   return (
     <div
@@ -60,6 +62,20 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             >
               Delete
             </button>
+          </div>
+          <div className="mt-2">
+            {task.tags.map((tag) => (
+              <span
+                key={tag}
+                className={`inline-block rounded-full px-2 py-1 text-xs font-semibold mr-2 ${
+                  selectedTags.includes(tag)
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 text-gray-700'
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       ))}
