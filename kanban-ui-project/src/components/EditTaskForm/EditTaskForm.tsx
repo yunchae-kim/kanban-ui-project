@@ -15,6 +15,7 @@ const EditTaskForm: React.FC<EditTaskFormProps> = ({
   const [title, setTitle] = useState(task.title);
   const [tags, setTags] = useState(task.tags);
   const [tagInput, setTagInput] = useState('');
+  const [showDuplicateWarning, setShowDuplicateWarning] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +23,19 @@ const EditTaskForm: React.FC<EditTaskFormProps> = ({
   };
 
   const handleAddTag = () => {
-    if (tagInput.trim() !== '') {
-      setTags([...tags, tagInput.trim()]);
-      setTagInput('');
+    const trimmedTag = tagInput.trim();
+    if (trimmedTag !== '') {
+      if (tags.includes(trimmedTag)) {
+        setShowDuplicateWarning(true);
+      } else {
+        setTags([...tags, trimmedTag]);
+        setTagInput('');
+      }
     }
+  };
+
+  const handleCloseDuplicateWarning = () => {
+    setShowDuplicateWarning(false);
   };
 
   const handleRemoveTag = (tag: string) => {
@@ -95,6 +105,17 @@ const EditTaskForm: React.FC<EditTaskFormProps> = ({
             </span>
           ))}
         </div>
+        {showDuplicateWarning && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mt-2 font-medium w-2/3 inline-block">
+            <p>Duplicate tag already exists!</p>
+            <button
+              className="mt-2 px-4 py-1 bg-red-500 text-white rounded font-bold"
+              onClick={handleCloseDuplicateWarning}
+            >
+              Close
+            </button>
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between">
         <button
