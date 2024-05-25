@@ -51,6 +51,9 @@ const TaskModal: React.FC<TaskModalProps> = ({
             >
               &times;
             </button>
+            <h2 className="text-2xl font-bold mb-2">
+              {initialTask ? 'Edit Task' : 'Create Task'}
+            </h2>
             {initialTask ? (
               <EditTaskForm
                 task={initialTask}
