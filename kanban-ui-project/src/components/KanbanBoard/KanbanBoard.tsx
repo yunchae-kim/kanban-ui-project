@@ -3,11 +3,20 @@ import TaskForm from '../TaskForm/TaskForm';
 import TaskColumn from '../TaskColumn/TaskColumn';
 import { Task } from '../../types/Task';
 import EditTaskForm from '../EditTaskForm/EditTaskForm';
+import ToggleOffIcon from '../../assets/icons/toggle-off.png';
+import ToggleOnIcon from '../../assets/icons/toggle-on.png';
 
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [hiddenColumns, setHiddenColumns] = useState<
+    Record<Task['status'], boolean>
+  >({
+    todo: false,
+    'in-progress': false,
+    done: false,
+  });
 
   const handleCreateTask = (title: string, tags: string[]) => {
     const newTask: Task = {
@@ -70,6 +79,13 @@ const KanbanBoard: React.FC = () => {
     }
   };
 
+  const toggleColumnVisibility = (status: Task['status']) => {
+    setHiddenColumns((prevState) => ({
+      ...prevState,
+      [status]: !prevState[status],
+    }));
+  };
+
   const filteredTasks =
     selectedTags.length > 0
       ? tasks.filter((task) =>
@@ -89,6 +105,38 @@ const KanbanBoard: React.FC = () => {
       ) : (
         <TaskForm onSubmit={handleCreateTask} />
       )}
+      <div className="mb-4 flex items-center justify-center">
+        <div className="mr-4 font-bold">Column Visibility:</div>
+        {(['todo', 'in-progress', 'done'] as Task['status'][]).map((status) => {
+          const statusLabels = {
+            todo: 'To Do',
+            'in-progress': 'In Progress',
+            done: 'Done',
+          };
+
+          return (
+            <div key={status} className="flex items-center mr-4">
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!hiddenColumns[status]}
+                  onChange={() => toggleColumnVisibility(status)}
+                  className="sr-only"
+                />
+                <span className="mr-3 ml-3 text-sm font-medium text-gray-900">
+                  {statusLabels[status]}
+                </span>
+                <img
+                  src={hiddenColumns[status] ? ToggleOffIcon : ToggleOnIcon}
+                  alt={`Toggle ${status}`}
+                  className="w-8 h-8"
+                />
+              </label>
+            </div>
+          );
+        })}
+      </div>
+
       <div className="mt-4">
         <h2 className="text-sl font-bold mb-2">Filter by Tags:</h2>
         <div>
@@ -110,39 +158,47 @@ const KanbanBoard: React.FC = () => {
         </div>
       </div>
       <div className="mt-8 grid grid-cols-3 gap-4">
-        <TaskColumn
-          title="To Do"
-          tasks={filteredTasks.filter((task) => task.status === 'todo')}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          status="todo"
-          onEditTask={handleEditTask}
-          onDeleteTask={handleDeleteTask}
-          selectedTags={selectedTags}
-        />
-        <TaskColumn
-          title="In Progress"
-          tasks={filteredTasks.filter((task) => task.status === 'in-progress')}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          status="in-progress"
-          onEditTask={handleEditTask}
-          onDeleteTask={handleDeleteTask}
-          selectedTags={selectedTags}
-        />
-        <TaskColumn
-          title="Done"
-          tasks={filteredTasks.filter((task) => task.status === 'done')}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          status="done"
-          onEditTask={handleEditTask}
-          onDeleteTask={handleDeleteTask}
-          selectedTags={selectedTags}
-        />
+        {!hiddenColumns.todo && (
+          <TaskColumn
+            title="To Do"
+            tasks={filteredTasks.filter((task) => task.status === 'todo')}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            status="todo"
+            onEditTask={handleEditTask}
+            onDeleteTask={handleDeleteTask}
+            selectedTags={selectedTags}
+          />
+        )}
+        {!hiddenColumns['in-progress'] && (
+          <TaskColumn
+            title="In Progress"
+            tasks={filteredTasks.filter(
+              (task) => task.status === 'in-progress',
+            )}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            status="in-progress"
+            onEditTask={handleEditTask}
+            onDeleteTask={handleDeleteTask}
+            selectedTags={selectedTags}
+          />
+        )}
+        {!hiddenColumns.done && (
+          <TaskColumn
+            title="Done"
+            tasks={filteredTasks.filter((task) => task.status === 'done')}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            status="done"
+            onEditTask={handleEditTask}
+            onDeleteTask={handleDeleteTask}
+            selectedTags={selectedTags}
+          />
+        )}
       </div>
     </div>
   );
