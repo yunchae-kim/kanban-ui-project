@@ -32,14 +32,18 @@ This project is a Kanban board implementation that allows users to create, edit,
 ### Components and Their Roles
 
 1. **`KanbanBoard.tsx`**:
+
    - The main component that holds the structure of the Kanban board.
    - Manages state for tasks, modal visibility, and tag selection.
    - Handles task creation, updating, deletion, and drag-and-drop functionality.
+
 2. **`TaskColumn.tsx`**:
+
    - Represents each column in the Kanban board.
    - Displays tasks based on their status.
    - Includes functionality for dragging and dropping tasks.
    - Provides buttons for creating new tasks and editing/deleting existing tasks.
+
 3. **`TaskModal.tsx`**:
 
    - A modal component for creating and editing tasks.
@@ -69,6 +73,7 @@ This project is a Kanban board implementation that allows users to create, edit,
    - Allows users to add, remove, and handle duplicate tag warnings.
 
 8. **`TaskCard.tsx`**:
+
    - A component for rendering individual task cards.
    - Handles task truncation, expansion, and displaying edit/delete icons.
 
