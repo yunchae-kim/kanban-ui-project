@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Task } from '../../types/Task';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import deleteIcon from '../../assets/icons/delete-icon.svg';
+import editIcon from '../../assets/icons/edit-icon.svg';
 
 interface TaskColumnProps {
   title: string;
@@ -92,17 +94,14 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
           )}
         </div>
         <div className="mt-4 flex justify-end">
-          <button
-            className="text-blue-500 hover:text-blue-700 mr-4 font-medium"
-            onClick={() => onEditTask(task.id)}
-          >
-            Edit
+          <button className="mr-4" onClick={() => onEditTask(task.id)}>
+            <img src={editIcon} alt="Edit" className="w-5 h-5" />
           </button>
           <button
-            className="text-red-500 hover:text-red-700 font-medium mr-4"
+            className="mr-4"
             onClick={() => handleDeleteConfirmation(task.id)}
           >
-            Delete
+            <img src={deleteIcon} alt="Delete" className="w-5 h-5" />
           </button>
         </div>
         {(task.title.length > titleLimit || task.tags.length > tagsLimit) && (
