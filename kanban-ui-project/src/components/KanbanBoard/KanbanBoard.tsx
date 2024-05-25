@@ -117,7 +117,7 @@ const KanbanBoard: React.FC = () => {
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
       <div className="mb-4 flex items-center justify-center">
-        <div className="mr-4 font-bold">Column Visibility:</div>
+        <div className="mr-4 font-bold">Show Columns:</div>
         {(['todo', 'in-progress', 'done'] as Task['status'][]).map((status) => {
           const statusLabels = {
             todo: 'To Do',
@@ -134,7 +134,7 @@ const KanbanBoard: React.FC = () => {
                   onChange={() => toggleColumnVisibility(status)}
                   className="sr-only"
                 />
-                <span className="mr-3 ml-3 text-sm font-medium text-gray-900">
+                <span className="mr-3 ml-3 text-gray-700 font-bold">
                   {statusLabels[status]}
                 </span>
                 <img
@@ -155,7 +155,7 @@ const KanbanBoard: React.FC = () => {
             (tag) => (
               <button
                 key={tag}
-                className={`px-2 py-1 rounded-full text-sm font-semibold mr-2 mb-2 ${
+                className={`inline-block px-3 py-2 rounded-full text-sm font-semibold mr-2 mb-2 ${
                   selectedTags.includes(tag)
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-700'
