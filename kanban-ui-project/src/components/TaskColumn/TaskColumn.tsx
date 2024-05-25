@@ -11,6 +11,7 @@ interface TaskColumnProps {
   onEditTask: (taskId: string) => void;
   onDeleteTask: (taskId: string) => void;
   selectedTags: string[];
+  onOpenTaskModal: (taskId?: string) => void;
 }
 
 const TaskColumn: React.FC<TaskColumnProps> = ({
@@ -23,6 +24,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
   onEditTask,
   onDeleteTask,
   selectedTags,
+  onOpenTaskModal,
 }) => {
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
 
@@ -110,6 +112,12 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     >
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       {tasks.map(renderTaskCard)}
+      <button
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        onClick={() => onOpenTaskModal()}
+      >
+        Create Task
+      </button>
     </div>
   );
 };
