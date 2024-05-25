@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Task } from '../../types/Task';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 interface TaskColumnProps {
   title: string;
@@ -27,9 +28,21 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
   onOpenTaskModal,
 }) => {
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
+  const [confirmDeleteTaskId, setConfirmDeleteTaskId] = useState<string | null>(
+    null,
+  );
 
   const handleToggleExpand = (taskId: string) => {
     setExpandedTaskId((prevTaskId) => (prevTaskId === taskId ? null : taskId));
+  };
+
+  const handleDeleteConfirmation = (taskId: string) => {
+    setConfirmDeleteTaskId(taskId);
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    onDeleteTask(taskId);
+    setConfirmDeleteTaskId(null);
   };
 
   const renderTaskCard = (task: Task) => {
@@ -86,8 +99,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             Edit
           </button>
           <button
-            className="text-red-500 hover:text-red-700 font-medium"
-            onClick={() => onDeleteTask(task.id)}
+            className="text-red-500 hover:text-red-700 font-medium mr-4"
+            onClick={() => handleDeleteConfirmation(task.id)}
           >
             Delete
           </button>
@@ -118,6 +131,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
       >
         Create Task
       </button>
+      <ConfirmModal
+        isOpen={!!confirmDeleteTaskId}
+        onCancel={() => setConfirmDeleteTaskId(null)}
+        onConfirm={() =>
+          confirmDeleteTaskId && handleDeleteTask(confirmDeleteTaskId)
+        }
+      />
     </div>
   );
 };
