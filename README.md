@@ -17,32 +17,33 @@ This project is a Kanban board implementation that allows users to create, edit,
    - The board consists of three columns: "To Do", "In Progress", and "Done".
    - Tasks can be dragged and dropped between columns to change their status.
    - Task information is truncated when necessary to prevent information overload.
-   - Icons next to each task allow for easy access to edit or delete
-     functionalities.
+   - Icons next to each task allow for easy access to edit or delete functionalities.
 
 3. **Tag Filtering**:
 
-   - Users can filter tasks by tags to view only the tasks that match the
-     selected tags.
+   - Users can filter tasks by tags to view only the tasks that match the selected tags.
 
 4. **Column Filtering**:
 
-   - Users can filter column tasks to view only the tasks that match the
-     selected status.
+   - Users can filter column tasks to view only the tasks that match the selected status.
 
 ## Project Structure
 
 ### Components and Their Roles
 
 1. **`KanbanBoard.tsx`**:
+
    - The main component that holds the structure of the Kanban board.
    - Manages state for tasks, modal visibility, and tag selection.
    - Handles task creation, updating, deletion, and drag-and-drop functionality.
+
 2. **`TaskColumn.tsx`**:
+
    - Represents each column in the Kanban board.
    - Displays tasks based on their status.
    - Includes functionality for dragging and dropping tasks.
    - Provides buttons for creating new tasks and editing/deleting existing tasks.
+
 3. **`TaskModal.tsx`**:
 
    - A modal component for creating and editing tasks.
@@ -66,9 +67,15 @@ This project is a Kanban board implementation that allows users to create, edit,
    - A modal component for confirming task deletions.
    - Asks users for confirmation before deleting a task.
 
-7. **`TagSelector.tsx`**:
-   - A component for selecting and creating tags.
-   - Allows users to filter tasks by tags.
+7. **`TagManager.tsx`**:
+
+   - A component for managing tags.
+   - Allows users to add, remove, and handle duplicate tag warnings.
+
+8. **`TaskCard.tsx`**:
+
+   - A component for rendering individual task cards.
+   - Handles task truncation, expansion, and displaying edit/delete icons.
 
 ## Tech Stack
 
@@ -79,5 +86,5 @@ This project is a Kanban board implementation that allows users to create, edit,
 
 - Project planning and structuring: 30 minutes
 - Development and implementation: 5 hours
-- Code refinement and CSS optimization: 1 hour
-- **Total**: 6 hours 30 minutes
+- Code refinement and CSS optimization: 1 hour 30 minutes
+- **Total**: 7 hours
