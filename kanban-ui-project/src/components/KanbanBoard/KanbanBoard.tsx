@@ -13,6 +13,7 @@ const KanbanBoard: React.FC = () => {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [modalStatus, setModalStatus] = useState<Task['status']>('todo');
   const [hiddenColumns, setHiddenColumns] = useState<
     Record<Task['status'], boolean>
   >({
@@ -53,8 +54,9 @@ const KanbanBoard: React.FC = () => {
     setSelectedTaskId(null);
   };
 
-  const handleOpenTaskModal = (taskId?: string) => {
+  const handleOpenTaskModal = (status: Task['status'], taskId?: string) => {
     setSelectedTaskId(taskId || null);
+    setModalStatus(status);
     setIsTaskModalOpen(true);
   };
 
@@ -86,7 +88,7 @@ const KanbanBoard: React.FC = () => {
   };
 
   const handleEditTask = (taskId: string) => {
-    handleOpenTaskModal(taskId);
+    handleOpenTaskModal(modalStatus, taskId);
   };
 
   const handleDeleteTask = (taskId: string) => {
@@ -183,7 +185,9 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
-            onOpenTaskModal={handleOpenTaskModal}
+            onOpenTaskModal={(taskId?: string) =>
+              handleOpenTaskModal('todo', taskId)
+            }
           />
         )}
         {!hiddenColumns['in-progress'] && (
@@ -199,7 +203,9 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
-            onOpenTaskModal={handleOpenTaskModal}
+            onOpenTaskModal={(taskId?: string) =>
+              handleOpenTaskModal('in-progress', taskId)
+            }
           />
         )}
         {!hiddenColumns.done && (
@@ -213,7 +219,9 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
-            onOpenTaskModal={handleOpenTaskModal}
+            onOpenTaskModal={(taskId?: string) =>
+              handleOpenTaskModal('done', taskId)
+            }
           />
         )}
       </div>
@@ -226,6 +234,7 @@ const KanbanBoard: React.FC = () => {
             ? tasks.find((task) => task.id === selectedTaskId)
             : undefined
         }
+        defaultStatus={modalStatus}
       />
     </div>
   );
