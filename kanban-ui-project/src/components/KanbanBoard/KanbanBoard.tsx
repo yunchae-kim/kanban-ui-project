@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import TaskForm from '../TaskForm/TaskForm';
 import TaskColumn from '../TaskColumn/TaskColumn';
 import { Task } from '../../types/Task';
-import EditTaskForm from '../EditTaskForm/EditTaskForm';
+import TaskModal from '../TaskModal/TaskModal';
 import ToggleOffIcon from '../../assets/icons/toggle-off.png';
 import ToggleOnIcon from '../../assets/icons/toggle-on.png';
 
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [hiddenColumns, setHiddenColumns] = useState<
     Record<Task['status'], boolean>
@@ -18,14 +18,46 @@ const KanbanBoard: React.FC = () => {
     done: false,
   });
 
-  const handleCreateTask = (title: string, tags: string[]) => {
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title,
-      tags,
-      status: 'todo',
-    };
-    setTasks([...tasks, newTask]);
+  const handleCreateTask = (
+    taskId: string | undefined,
+    title: string,
+    tags: string[],
+    status: Task['status'],
+  ) => {
+    if (taskId) {
+      handleUpdateTask(taskId, title, tags, status);
+    } else {
+      const newTask: Task = {
+        id: Date.now().toString(),
+        title,
+        tags,
+        status,
+      };
+      setTasks([...tasks, newTask]);
+    }
+  };
+
+  const handleUpdateTask = (
+    taskId: string,
+    title: string,
+    tags: string[],
+    status: Task['status'],
+  ) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, title, tags, status } : task,
+    );
+    setTasks(updatedTasks);
+    setSelectedTaskId(null);
+  };
+
+  const handleOpenTaskModal = (taskId?: string) => {
+    setSelectedTaskId(taskId || null);
+    setIsTaskModalOpen(true);
+  };
+
+  const handleCloseTaskModal = () => {
+    setSelectedTaskId(null);
+    setIsTaskModalOpen(false);
   };
 
   const handleDragStart = (
@@ -51,19 +83,7 @@ const KanbanBoard: React.FC = () => {
   };
 
   const handleEditTask = (taskId: string) => {
-    setEditingTaskId(taskId);
-  };
-
-  const handleUpdateTask = (taskId: string, title: string, tags: string[]) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, title, tags } : task,
-    );
-    setTasks(updatedTasks);
-    setEditingTaskId(null);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingTaskId(null);
+    handleOpenTaskModal(taskId);
   };
 
   const handleDeleteTask = (taskId: string) => {
@@ -96,15 +116,6 @@ const KanbanBoard: React.FC = () => {
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
-      {editingTaskId ? (
-        <EditTaskForm
-          task={tasks.find((task) => task.id === editingTaskId)!}
-          onSubmit={handleUpdateTask}
-          onCancel={handleCancelEdit}
-        />
-      ) : (
-        <TaskForm onSubmit={handleCreateTask} />
-      )}
       <div className="mb-4 flex items-center justify-center">
         <div className="mr-4 font-bold">Column Visibility:</div>
         {(['todo', 'in-progress', 'done'] as Task['status'][]).map((status) => {
@@ -169,6 +180,7 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
+            onOpenTaskModal={handleOpenTaskModal}
           />
         )}
         {!hiddenColumns['in-progress'] && (
@@ -184,6 +196,7 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
+            onOpenTaskModal={handleOpenTaskModal}
           />
         )}
         {!hiddenColumns.done && (
@@ -197,9 +210,20 @@ const KanbanBoard: React.FC = () => {
             onEditTask={handleEditTask}
             onDeleteTask={handleDeleteTask}
             selectedTags={selectedTags}
+            onOpenTaskModal={handleOpenTaskModal}
           />
         )}
       </div>
+      <TaskModal
+        isOpen={isTaskModalOpen}
+        onClose={handleCloseTaskModal}
+        onSubmit={handleCreateTask}
+        initialTask={
+          selectedTaskId
+            ? tasks.find((task) => task.id === selectedTaskId)
+            : undefined
+        }
+      />
     </div>
   );
 };
