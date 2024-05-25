@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Task } from '../../types/Task';
 import TaskForm from '../TaskForm/TaskForm';
 import EditTaskForm from '../EditTaskForm/EditTaskForm';
@@ -13,6 +13,7 @@ interface TaskModalProps {
     status: Task['status'],
   ) => void;
   initialTask?: Task;
+  defaultStatus: Task['status'];
 }
 
 /**
@@ -23,10 +24,17 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onClose,
   onSubmit,
   initialTask,
+  defaultStatus,
 }) => {
   const [status, setStatus] = useState<Task['status']>(
-    initialTask?.status || 'todo',
+    initialTask?.status || defaultStatus,
   );
+
+  useEffect(() => {
+    if (!initialTask) {
+      setStatus(defaultStatus);
+    }
+  }, [defaultStatus, initialTask]);
 
   const handleCreateSubmit = (title: string, tags: string[]) => {
     onSubmit(undefined, title, tags, status);
