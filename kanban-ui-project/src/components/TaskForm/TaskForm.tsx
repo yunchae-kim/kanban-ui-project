@@ -78,7 +78,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
           />
           <button
             type="button"
-            className="ml-2 px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-full shadow-sm"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-3"
             onClick={handleAddTag}
           >
             Add
@@ -88,7 +88,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-200 text-gray-800 mr-2"
+              className="inline-block items-center rounded-full mb-1 px-3 text-xs font-semibold mr-2 py-2 bg-gray-200 text-gray-700"
             >
               {tag}
               <button
@@ -102,10 +102,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit }) => {
           ))}
         </div>
         {showDuplicateWarning && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mt-2">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mt-2 font-medium w-2/3 inline-block">
             <p>Duplicate tag already exists!</p>
             <button
-              className="mt-2 px-4 py-1 bg-red-500 text-white rounded"
+              className="mt-2 px-4 py-1 bg-red-500 text-white rounded font-bold"
               onClick={handleCloseDuplicateWarning}
             >
               Close

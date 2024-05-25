@@ -63,7 +63,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
           {(isExpanded ? task.tags : truncatedTags).map((tag) => (
             <span
               key={tag}
-              className={`inline-block rounded-full mb-1 px-2 py-1 text-xs font-semibold mr-2 ${
+              className={`inline-block rounded-full mb-1 px-3 text-xs font-semibold mr-2 py-2 ${
                 selectedTags.includes(tag)
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-200 text-gray-700'
@@ -80,13 +80,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
         </div>
         <div className="mt-4 flex justify-end">
           <button
-            className="text-blue-500 hover:text-blue-700 mr-4"
+            className="text-blue-500 hover:text-blue-700 mr-4 font-medium"
             onClick={() => onEditTask(task.id)}
           >
             Edit
           </button>
           <button
-            className="text-red-500 hover:text-red-700"
+            className="text-red-500 hover:text-red-700 font-medium"
             onClick={() => onDeleteTask(task.id)}
           >
             Delete
@@ -113,7 +113,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       {tasks.map(renderTaskCard)}
       <button
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={() => onOpenTaskModal()}
       >
         Create Task

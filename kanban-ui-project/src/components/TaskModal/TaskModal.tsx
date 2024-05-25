@@ -43,10 +43,10 @@ const TaskModal: React.FC<TaskModalProps> = ({
             className="absolute inset-0 bg-black opacity-50"
             onClick={onClose}
           ></div>
-          <div className="bg-white rounded-lg p-6 z-10 w-96 relative">
+          <div className="bg-white rounded-lg p-10 z-10 w-2/5 relative">
             <button
               type="button"
-              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+              className="absolute top-2 right-3 text-gray-600 hover:text-gray-900"
               onClick={onClose}
             >
               &times;
@@ -61,12 +61,15 @@ const TaskModal: React.FC<TaskModalProps> = ({
               <TaskForm onSubmit={handleCreateSubmit} />
             )}
             <div className="mt-4">
-              <label htmlFor="status" className="block mb-2">
+              <label
+                htmlFor="status"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
                 Status:
               </label>
               <select
                 id="status"
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border border-gray-300 rounded px-3 py-2 block text-gray-700 text-sm font-bold"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as Task['status'])}
               >
