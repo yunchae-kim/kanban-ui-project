@@ -5,6 +5,9 @@ import TaskModal from '../TaskModal/TaskModal';
 import ToggleOffIcon from '../../assets/icons/toggle-off.png';
 import ToggleOnIcon from '../../assets/icons/toggle-on.png';
 
+/**
+ * KanbanBoard component represents the main Kanban board with columns.
+ */
 const KanbanBoard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -115,8 +118,8 @@ const KanbanBoard: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">Kanban Board</h1>
-      <div className="mb-4 flex items-center justify-center">
+      <h1 className="mb-4 text-3xl font-bold">Kanban Board</h1>
+      <div className="flex items-center justify-center mb-4">
         <div className="mr-4 font-bold">Show Columns:</div>
         {(['todo', 'in-progress', 'done'] as Task['status'][]).map((status) => {
           const statusLabels = {
@@ -134,7 +137,7 @@ const KanbanBoard: React.FC = () => {
                   onChange={() => toggleColumnVisibility(status)}
                   className="sr-only"
                 />
-                <span className="mr-3 ml-3 text-gray-700 font-bold">
+                <span className="ml-3 mr-3 text-gray-700 font-bold">
                   {statusLabels[status]}
                 </span>
                 <img
@@ -149,13 +152,13 @@ const KanbanBoard: React.FC = () => {
       </div>
 
       <div className="mt-4">
-        <h2 className="text-sl font-bold mb-2">Filter by Tags:</h2>
+        <h2 className="mb-2 text-sl font-bold">Filter by Tags:</h2>
         <div>
           {Array.from(new Set(tasks.flatMap((task) => task.tags))).map(
             (tag) => (
               <button
                 key={tag}
-                className={`inline-block px-3 py-2 rounded-full text-sm font-semibold mr-2 mb-2 ${
+                className={`inline-block px-3 py-2 mb-2 mr-2 text-sm font-semibold rounded-full ${
                   selectedTags.includes(tag)
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-gray-700'
@@ -168,7 +171,7 @@ const KanbanBoard: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="mt-8 grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 mt-8">
         {!hiddenColumns.todo && (
           <TaskColumn
             title="To Do"

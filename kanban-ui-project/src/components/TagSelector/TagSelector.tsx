@@ -7,6 +7,9 @@ interface TagSelectorProps {
   onCreateTag: (tag: string) => void;
 }
 
+/**
+ * TagSelector component for selecting and creating tags.
+ */
 const TagSelector: React.FC<TagSelectorProps> = ({
   tags,
   selectedTags,
@@ -16,6 +19,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
   const [inputValue, setInputValue] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  // Filtered tags based on input value and selected tags
   const filteredTags = tags.filter(
     (tag) =>
       tag.toLowerCase().includes(inputValue.toLowerCase()) &&
@@ -45,7 +49,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
     <div className="relative">
       <input
         type="text"
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="w-full px-3 py-2 text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
         value={inputValue}
         onChange={handleInputChange}
         onFocus={() => setIsDropdownOpen(true)}
@@ -53,11 +57,11 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         placeholder="Type to select or create a tag"
       />
       {isDropdownOpen && (
-        <ul className="absolute mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+        <ul className="absolute w-full py-1 mt-1 text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
           {filteredTags.map((tag) => (
             <li
               key={tag}
-              className="text-gray-700 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-blue-600 hover:text-white"
+              className="relative py-2 pl-3 pr-9 text-gray-700 cursor-default select-none hover:bg-blue-600 hover:text-white"
               onClick={() => handleSelectTag(tag)}
             >
               {tag}
@@ -65,7 +69,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
           ))}
           {inputValue.trim() !== '' && (
             <li
-              className="text-gray-700 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-blue-600 hover:text-white"
+              className="relative py-2 pl-3 pr-9 text-gray-700 cursor-default select-none hover:bg-blue-600 hover:text-white"
               onClick={handleCreateTag}
             >
               Create "{inputValue}"

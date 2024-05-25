@@ -15,6 +15,9 @@ interface TaskModalProps {
   initialTask?: Task;
 }
 
+/**
+ * TaskModal component for creating and editing tasks in a modal window.
+ */
 const TaskModal: React.FC<TaskModalProps> = ({
   isOpen,
   onClose,
@@ -38,12 +41,12 @@ const TaskModal: React.FC<TaskModalProps> = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
             className="absolute inset-0 bg-black opacity-50"
             onClick={onClose}
           ></div>
-          <div className="bg-white rounded-lg p-10 z-10 w-2/5 relative">
+          <div className="relative w-2/5 p-10 bg-white rounded-lg z-10">
             <button
               type="button"
               className="absolute top-2 right-3 text-gray-600 hover:text-gray-900"
@@ -51,7 +54,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             >
               &times;
             </button>
-            <h2 className="text-2xl font-bold mb-2">
+            <h2 className="mb-2 text-2xl font-bold">
               {initialTask ? 'Edit Task' : 'Create Task'}
             </h2>
             {initialTask ? (
@@ -66,13 +69,13 @@ const TaskModal: React.FC<TaskModalProps> = ({
             <div className="mt-4">
               <label
                 htmlFor="status"
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="block mb-2 text-sm font-bold text-gray-700"
               >
                 Status:
               </label>
               <select
                 id="status"
-                className="w-full border border-gray-300 rounded px-3 py-2 block text-gray-700 text-sm font-bold"
+                className="block w-full px-3 py-2 text-sm font-bold text-gray-700 border border-gray-300 rounded"
                 value={status}
                 onChange={(e) => setStatus(e.target.value as Task['status'])}
               >
