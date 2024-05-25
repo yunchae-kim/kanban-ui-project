@@ -43,7 +43,14 @@ const TaskModal: React.FC<TaskModalProps> = ({
             className="absolute inset-0 bg-black opacity-50"
             onClick={onClose}
           ></div>
-          <div className="bg-white rounded-lg p-6 z-10 w-96">
+          <div className="bg-white rounded-lg p-6 z-10 w-96 relative">
+            <button
+              type="button"
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+              onClick={onClose}
+            >
+              &times;
+            </button>
             {initialTask ? (
               <EditTaskForm
                 task={initialTask}
